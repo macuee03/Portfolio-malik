@@ -1,26 +1,235 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #17191b;
+  --foreground: #edf0f2;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-purple-300: #e2e5e8;
+  --color-purple-400: #c4c8cc;
+  --color-purple-500: #a1a5a9;
+  --color-purple-600: #797d81;
+  --color-purple-950: #292b2e;
+  --color-indigo-400: #eef0f2;
+  --color-indigo-500: #cdd1d5;
+  --color-indigo-600: #969ba0;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.swipe-scrollbar-hidden {
+  scrollbar-width: none;
+}
+
+.swipe-scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.portfolio-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  animation: background-appear 1.2s ease-out both;
+  background:
+    radial-gradient(ellipse at 12% 8%, rgb(194 198 202 / 13%), transparent 42%),
+    radial-gradient(ellipse at 88% 34%, rgb(116 120 124 / 12%), transparent 40%),
+    radial-gradient(ellipse at 42% 88%, rgb(226 229 232 / 6%), transparent 44%),
+    linear-gradient(180deg, #242629 0%, #1c1f22 52%, #17191b 100%);
+}
+
+.portfolio-background::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(215 219 224 / 4%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(215 219 224 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
+  content: "";
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.portfolio-glow {
+  position: absolute;
+  width: clamp(18rem, 38vw, 38rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.42;
+  animation: ambient-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.portfolio-glow--violet {
+  top: -18rem;
+  left: -12rem;
+  background: radial-gradient(circle, rgb(166 177 190 / 22%), transparent 68%);
+}
+
+.portfolio-glow--blue {
+  top: 26%;
+  right: -17rem;
+  background: radial-gradient(circle, rgb(100 117 135 / 18%), transparent 68%);
+  animation-delay: -8s;
+}
+
+.portfolio-glow--indigo {
+  bottom: -23rem;
+  left: 22%;
+  background: radial-gradient(circle, rgb(218 222 227 / 9%), transparent 68%);
+  animation-delay: -14s;
+}
+
+.portfolio-ornament {
+  position: absolute;
+  color: rgb(215 219 224 / 58%);
+}
+
+.portfolio-ornament--orbit {
+  top: 14%;
+  right: 8%;
+  width: clamp(10rem, 22vw, 18rem);
+  aspect-ratio: 1;
+  border: 1px solid rgb(184 190 199 / 15%);
+  border-radius: 50%;
+  animation: orbit-drift 70s linear infinite;
+}
+
+.portfolio-ornament--orbit::before {
+  position: absolute;
+  inset: 20%;
+  border: 1px solid rgb(215 219 224 / 12%);
+  border-radius: 50%;
+  content: "";
+  transform: scaleX(0.58) rotate(-35deg);
+}
+
+.portfolio-ornament--orbit::after {
+  position: absolute;
+  top: 17%;
+  right: 16%;
+  width: 6px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d7dbe0;
+  box-shadow: 0 0 14px 3px rgb(215 219 224 / 30%);
+  content: "";
+}
+
+.portfolio-ornament--stars {
+  top: 42%;
+  left: 5%;
+  width: 7rem;
+  height: 9rem;
+  background-image: radial-gradient(
+    circle,
+    rgb(215 219 224 / 34%) 1px,
+    transparent 1.5px
+  );
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse, black, transparent 72%);
+  opacity: 0.35;
+}
+
+.portfolio-ornament--sparkle {
+  width: 12px;
+  aspect-ratio: 1;
+  background: #d7dbe0;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  filter: drop-shadow(0 0 6px rgb(215 219 224 / 45%));
+  animation: sparkle 4s ease-in-out infinite;
+}
+
+.portfolio-ornament--sparkle-one {
+  top: 26%;
+  left: 16%;
+}
+
+.portfolio-ornament--sparkle-two {
+  right: 18%;
+  bottom: 22%;
+  width: 8px;
+  animation-delay: -2s;
+}
+
+@keyframes ambient-drift {
+  from {
+    opacity: 0.32;
+    transform: translate3d(-2%, -1%, 0) scale(0.94);
+  }
+
+  to {
+    opacity: 0.68;
+    transform: translate3d(3%, 2%, 0) scale(1.08);
+  }
+}
+
+@keyframes orbit-drift {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes background-appear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-background {
+    animation: none;
+  }
+
+  .portfolio-glow {
+    animation: none;
+  }
+
+  .portfolio-ornament--orbit,
+  .portfolio-ornament--sparkle {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .portfolio-ornament--orbit {
+    top: 12%;
+    right: -3rem;
+    opacity: 0.7;
+  }
+
+  .portfolio-ornament--stars {
+    left: -1rem;
+    opacity: 0.22;
+  }
+
+  .portfolio-ornament--sparkle-one {
+    left: 10%;
+  }
 }
