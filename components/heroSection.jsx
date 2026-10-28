@@ -120,7 +120,7 @@ export default function HeroSection({ onNavigate, language }) {
 
         <div className="relative w-60 h-60 min-[400px]:w-64 min-[400px]:h-64 sm:w-72 sm:h-72 md:w-84 md:h-84 rounded-3xl p-2 bg-linear-to-b from-purple-500/45 to-indigo-600/15 border border-purple-500/40 shadow-[0_0_40px_rgba(215,219,224,0.18)] overflow-hidden">
           <Image
-            src="/profile.jpg"
+            src="/profile.webp"
             alt="Malik Maulana Abdillah"
             width={350}
             height={350}
