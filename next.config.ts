@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     agentFeedback: true,
+    optimizePackageImports: ["lucide-react", "framer-motion"],
   },
   turbopack: {
     rules: {
@@ -22,6 +23,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
 };
 
 export default nextConfig;

@@ -69,6 +69,11 @@ body {
   will-change: transform;
 }
 
+.hero-orb {
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(166 121 255 / 24%), transparent 68%);
+}
+
 .portfolio-glow--violet {
   top: -18rem;
   left: -12rem;

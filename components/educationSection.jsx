@@ -1,9 +1,4 @@
-"use client";
-
-import { useRef } from "react";
 import { GraduationCap, Calendar } from "lucide-react";
-import Reveal from "./reveal";
-import HorizontalScrollControls from "./horizontalScrollControls";
 
 const ACHIEVEMENTS_DATA = {
   id: [
@@ -61,8 +56,6 @@ const ACHIEVEMENTS_DATA = {
 };
 
 export default function EducationSection({ language }) {
-  const scrollRef = useRef(null);
-
   return (
     <section id="achievements" className="scroll-mt-24 pt-6 sm:scroll-mt-28">
       <div>
@@ -85,19 +78,14 @@ export default function EducationSection({ language }) {
                 ? "Geser kartu untuk melihat lainnya"
                 : "Swipe to explore"}
             </p>
-            <HorizontalScrollControls
-              scrollRef={scrollRef}
-              language={language}
-            />
           </div>
         </div>
 
         <div
-          ref={scrollRef}
           className="swipe-scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 sm:gap-5 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3 lg:gap-6"
         >
           {ACHIEVEMENTS_DATA[language].map((item, idx) => (
-            <Reveal
+            <div
               key={idx}
               delay={idx * 0.1}
               hoverLift
@@ -127,7 +115,7 @@ export default function EducationSection({ language }) {
                   </span>
                 </span>
               </article>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>

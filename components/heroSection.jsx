@@ -71,12 +71,15 @@ function TechLogo({ icon, color, size = 22 }) {
   );
 }
 
-export default function HeroSection({ onNavigate, language }) {
+export default function HeroSection({ language }) {
   const reduceMotion = useReducedMotion();
   const [showFrontend, setShowFrontend] = useState(true);
   const [isCardFlipped, setIsCardFlipped] = useState(false);
   const cardPointerStart = useRef(null);
   const cardBoundsRef = useRef(null);
+  const navigateTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
@@ -168,7 +171,7 @@ export default function HeroSection({ onNavigate, language }) {
             {language === "id" ? "Unduh CV" : "Download CV"}
           </a>
           <button
-            onClick={() => onNavigate("contact")}
+            onClick={() => navigateTo("contact")}
             className="px-7 py-3 rounded-full bg-[#20252b] border border-purple-500/30 text-slate-200 font-medium text-sm hover:border-purple-400 hover:text-purple-300 transition-all flex items-center gap-2 cursor-pointer"
           >
             <Mail className="w-4 h-4" />
@@ -183,7 +186,7 @@ export default function HeroSection({ onNavigate, language }) {
         delay={0.15}
         animateOnLoad
       >
-        <div className="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-linear-to-tr from-purple-600/25 to-purple-400/15 blur-2xl pointer-events-none" />
+        <div className="hero-orb absolute h-72 w-72 pointer-events-none md:h-96 md:w-96" />
 
         <div
           ref={cardBoundsRef}
@@ -258,6 +261,7 @@ export default function HeroSection({ onNavigate, language }) {
                       alt="Malik Maulana Abdillah"
                       width={350}
                       height={350}
+                      sizes="(max-width: 640px) 220px, 280px"
                       priority
                       className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                     />

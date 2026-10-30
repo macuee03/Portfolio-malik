@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Check, ChevronDown, Menu, X } from "lucide-react";
 
 const NAV_ITEMS = {
@@ -57,7 +58,8 @@ function LanguageFlag({ language }) {
   );
 }
 
-export default function Navbar({ onNavigate, language, onToggleLanguage }) {
+export default function Navbar({ language }) {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const languageMenuRef = useRef(null);
@@ -85,12 +87,14 @@ export default function Navbar({ onNavigate, language, onToggleLanguage }) {
   }, [isLanguageMenuOpen]);
 
   const handleNavigate = (id) => {
-    onNavigate(id);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
 
   const selectLanguage = (selectedLanguage) => {
-    if (selectedLanguage !== language) onToggleLanguage();
+    if (selectedLanguage !== language) {
+      router.replace(`/?lang=${selectedLanguage}`, { scroll: false });
+    }
     setIsLanguageMenuOpen(false);
   };
 
@@ -110,7 +114,7 @@ export default function Navbar({ onNavigate, language, onToggleLanguage }) {
               alt="Logo Malik"
               width={530}
               height={530}
-              priority
+              sizes="(max-width: 640px) 48px, 64px"
               className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(215,219,224,0.22)] hover:drop-shadow-[0_0_18px_rgba(215,219,224,0.38)] transition-all"
             />
           </div>

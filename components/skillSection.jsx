@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef } from "react";
 import {
   Braces,
   Database,
@@ -8,8 +5,6 @@ import {
   PanelsTopLeft,
   Wrench,
 } from "lucide-react";
-import Reveal from "./reveal";
-import HorizontalScrollControls from "./horizontalScrollControls";
 
 const SKILL_GROUPS = [
   {
@@ -66,8 +61,6 @@ const SKILL_GROUPS = [
 ];
 
 export default function SkillsSection({ language }) {
-  const scrollRef = useRef(null);
-
   return (
     <section id="skills" className="scroll-mt-24 pt-6 sm:scroll-mt-28">
       <div>
@@ -87,19 +80,17 @@ export default function SkillsSection({ language }) {
               ? "Geser kartu untuk melihat lainnya"
               : "Swipe to explore"}
           </p>
-          <HorizontalScrollControls scrollRef={scrollRef} language={language} />
         </div>
       </div>
 
       <div
-        ref={scrollRef}
         className="swipe-scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 sm:gap-5 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3"
       >
         {SKILL_GROUPS.map((group, idx) => {
           const Icon = group.icon;
 
           return (
-            <Reveal
+            <div
               key={group.title.en}
               delay={idx * 0.07}
               hoverLift
@@ -131,7 +122,7 @@ export default function SkillsSection({ language }) {
                   ))}
                 </ul>
               </article>
-            </Reveal>
+            </div>
           );
         })}
       </div>
