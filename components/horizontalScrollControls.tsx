@@ -2,8 +2,16 @@
 
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { RefObject } from "react";
+import type { Language } from "./types";
 
-export default function HorizontalScrollControls({ scrollRef, language }) {
+export default function HorizontalScrollControls({
+  scrollRef,
+  language,
+}: {
+  scrollRef: RefObject<HTMLDivElement | null>;
+  language: Language;
+}) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
@@ -33,7 +41,7 @@ export default function HorizontalScrollControls({ scrollRef, language }) {
     };
   }, [scrollRef]);
 
-  const scroll = (direction) => {
+  const scroll = (direction: -1 | 1) => {
     const track = scrollRef.current;
     if (!track) return;
 

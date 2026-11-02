@@ -1,6 +1,7 @@
 import ContactIsland from "./contactIsland";
+import type { Language } from "./types";
 
-export default function ContactSection({ language }) {
+export default function ContactSection({ language }: { language: Language }) {
   return (
     <section
       id="contact"
@@ -8,9 +9,7 @@ export default function ContactSection({ language }) {
     >
       <ContactIsland language={language} />
       <footer className="mt-10 border-t border-purple-500/10 pt-6 text-center font-mono text-xs text-slate-500">
-        © 2026 Malik Maulana Abdillah •{" "}
-        {language === "id" ? "Dibangun dengan" : "Built with"} Next.js 16,
-        Tailwind CSS &amp; Framer Motion
+        © 2026 Malik Maulana Abdillah, S.Kom
       </footer>
     </section>
   );

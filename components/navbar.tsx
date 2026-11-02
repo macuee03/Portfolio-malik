@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown, Menu, X } from "lucide-react";
+import type { Language } from "./types";
 
-const NAV_ITEMS = {
+const NAV_ITEMS: Record<Language, Array<{ label: string; id: string }>> = {
   id: [
     { label: "Beranda", id: "hero" },
     { label: "Tentang", id: "about" },
@@ -24,7 +25,7 @@ const NAV_ITEMS = {
   ],
 };
 
-function LanguageFlag({ language }) {
+function LanguageFlag({ language }: { language: Language }) {
   if (language === "id") {
     return (
       <svg
@@ -58,22 +59,22 @@ function LanguageFlag({ language }) {
   );
 }
 
-export default function Navbar({ language }) {
+export default function Navbar({ language }: { language: Language }) {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
-  const languageMenuRef = useRef(null);
+  const languageMenuRef = useRef<HTMLDivElement>(null);
   const navItems = NAV_ITEMS[language];
 
   useEffect(() => {
     if (!isLanguageMenuOpen) return;
 
-    const closeOnOutsideClick = (event) => {
-      if (!languageMenuRef.current?.contains(event.target)) {
+    const closeOnOutsideClick = (event: globalThis.PointerEvent) => {
+      if (!(event.target instanceof Node) || !languageMenuRef.current?.contains(event.target)) {
         setIsLanguageMenuOpen(false);
       }
     };
-    const closeOnEscape = (event) => {
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
       if (event.key === "Escape") setIsLanguageMenuOpen(false);
     };
 
@@ -86,12 +87,12 @@ export default function Navbar({ language }) {
     };
   }, [isLanguageMenuOpen]);
 
-  const handleNavigate = (id) => {
+  const handleNavigate = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setIsMenuOpen(false);
   };
 
-  const selectLanguage = (selectedLanguage) => {
+  const selectLanguage = (selectedLanguage: Language) => {
     if (selectedLanguage !== language) {
       router.replace(`/?lang=${selectedLanguage}`, { scroll: false });
     }
@@ -110,11 +111,12 @@ export default function Navbar({ language }) {
         >
           <div className="relative h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 flex items-center justify-start">
             <Image
-              src="/logo_1.png"
+              src="/logo.svg"
               alt="Logo Malik"
-              width={530}
-              height={530}
+              width={536}
+              height={465}
               sizes="(max-width: 640px) 48px, 64px"
+              loading="eager"
               className="h-full w-full object-contain drop-shadow-[0_0_12px_rgba(215,219,224,0.22)] hover:drop-shadow-[0_0_18px_rgba(215,219,224,0.38)] transition-all"
             />
           </div>
@@ -125,7 +127,7 @@ export default function Navbar({ language }) {
             <button
               key={item.id}
               onClick={() => handleNavigate(item.id)}
-              className="hover:text-purple-400 transition-colors cursor-pointer whitespace-nowrap"
+              className="cursor-pointer whitespace-nowrap text-slate-300 transition-colors hover:text-purple-300 focus-visible:outline-2 focus-visible:outline-purple-400"
             >
               {item.label}
             </button>
@@ -232,7 +234,7 @@ export default function Navbar({ language }) {
               <button
                 key={item.id}
                 onClick={() => handleNavigate(item.id)}
-                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 transition-colors hover:bg-purple-500/10 hover:text-purple-300 focus-visible:outline-2 focus-visible:outline-purple-400"
+                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-300 transition-colors hover:text-purple-300 focus-visible:outline-2 focus-visible:outline-purple-400"
               >
                 {item.label}
               </button>

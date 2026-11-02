@@ -1,6 +1,19 @@
-import { GraduationCap, Calendar } from "lucide-react";
+"use client";
 
-const ACHIEVEMENTS_DATA = {
+import { GraduationCap, Calendar } from "lucide-react";
+import { useRef } from "react";
+import type { Language } from "./types";
+import HorizontalScrollControls from "./horizontalScrollControls";
+
+const ACHIEVEMENTS_DATA: Record<
+  Language,
+  Array<{
+    title: string;
+    issuer: string;
+    date: string;
+    type: string;
+  }>
+> = {
   id: [
     {
       title: "Multimedia",
@@ -17,14 +30,26 @@ const ACHIEVEMENTS_DATA = {
     {
       title: "Implementasi Enkripsi AES-RSA",
       issuer: "Tugas Akhir — Kriptografi Basis Data",
-      date: "Juli 2026",
+      date: "Jul 2026",
       type: "Tugas Akhir",
     },
     {
       title: "Magang Pengembang Web",
       issuer: "PT. Mustika Putra Nusantara",
-      date: "April – Juli 2025",
+      date: "Apr – Jul 2025",
       type: "Magang",
+    },
+    {
+      title: "Backend Developer",
+      issuer: "TOS Align Clinic",
+      date: "Feb 2026 – Aug 2026",
+      type: "Pengalaman",
+    },
+    {
+      title: "Anggota Aktif GDGoC",
+      issuer: "Google Developer Groups on Campus",
+      date: "2025",
+      type: "Komunitas",
     },
   ],
   en: [
@@ -52,10 +77,24 @@ const ACHIEVEMENTS_DATA = {
       date: "Apr – Jul 2025",
       type: "Internship",
     },
+    {
+      title: "Backend Developer",
+      issuer: "TOS Align Clinic",
+      date: "Feb 2026 – Aug 2026",
+      type: "Experience",
+    },
+    {
+      title: "Active GDGoC Member",
+      issuer: "Google Developer Groups on Campus",
+      date: "2025",
+      type: "Community",
+    },
   ],
 };
 
-export default function EducationSection({ language }) {
+export default function EducationSection({ language }: { language: Language }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <section id="achievements" className="scroll-mt-24 pt-6 sm:scroll-mt-28">
       <div>
@@ -75,20 +114,23 @@ export default function EducationSection({ language }) {
           <div className="mb-6 mt-3 flex items-center justify-between gap-4">
             <p className="text-xs text-slate-400 md:hidden">
               {language === "id"
-                ? "Geser kartu untuk melihat lainnya"
-                : "Swipe to explore"}
+                ? "Geser untuk melihat riwayat lainnya"
+                : "Swipe to see more"}
             </p>
+            <HorizontalScrollControls
+              scrollRef={scrollRef}
+              language={language}
+            />
           </div>
         </div>
 
         <div
+          ref={scrollRef}
           className="swipe-scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 sm:gap-5 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3 lg:gap-6"
         >
           {ACHIEVEMENTS_DATA[language].map((item, idx) => (
             <div
               key={idx}
-              delay={idx * 0.1}
-              hoverLift
               className="w-[72vw] max-w-88 shrink-0 snap-start md:w-auto md:max-w-none md:shrink"
             >
               <article className="h-full min-h-52 bg-linear-to-br from-[#343638]/85 to-[#202225]/90 border border-purple-500/15 rounded-2xl p-5 sm:p-6 backdrop-blur-xl flex flex-col hover:border-purple-500/40 transition-all group">

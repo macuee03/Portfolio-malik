@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio | Malik Maulana Abdillah",
   description:
-    "Portofolio profesional Malik Maulana Abdillah, pengembang frontend dan backend.",
+    "Portofolio Malik Maulana Abdillah, pengembang web dengan pengalaman frontend dan backend.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

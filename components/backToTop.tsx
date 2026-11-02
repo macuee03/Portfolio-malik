@@ -2,8 +2,9 @@
 
 import { ArrowUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { Language } from "./types";
 
-export default function BackToTop({ language }) {
+export default function BackToTop({ language }: { language: Language }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

@@ -1,12 +1,26 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import { useRef } from "react";
+import type { Language } from "./types";
+import HorizontalScrollControls from "./horizontalScrollControls";
+import SpotlightCard from "./spotlightCard";
 
-const PROJECTS_DATA = {
+type Project = {
+  title: string;
+  category: string;
+  desc: string;
+  image: string;
+  href?: string;
+};
+
+const PROJECTS_DATA: Record<Language, Project[]> = {
   id: [
     {
       title: "TOS Align Clinic",
       category: "Pengembangan Web • Next.js",
-      desc: "Pengembangan situs web klinik spesialis aligner transparan untuk mendukung promosi layanan serta jaringan lebih dari 135 mitra di 40 kota di Indonesia.",
+      desc: "Pengembangan situs web klinik spesialis clear aligner untuk mendukung promosi layanan serta jaringan 135+ klinik mitra di 40+ kota di Indonesia.",
       image: "/clinic.webp",
       href: "https://tosalign.com",
     },
@@ -14,20 +28,41 @@ const PROJECTS_DATA = {
       title: "Manajemen Data Perumahan",
       category: "Aplikasi Web • PHP",
       desc: "Digitalisasi proses bisnis perusahaan melalui sistem berbasis web dengan fitur impor data dan pelaporan administrasi.",
-      image: "/mustika.png",
+      image: "/mustika.webp",
     },
     {
       title: "Enkripsi Hibrida AES-RSA",
       category: "Keamanan Data • OpenSSL",
       desc: "Perlindungan data sensitif pada basis data (data at rest) menggunakan kombinasi AES-256-CBC dan RSA-2048 OAEP sebagai bagian dari tugas akhir.",
-      image: "/AES-RSA.png",
+      image: "/AES-RSA.webp",
+    },
+    {
+      title: "SecureDoc Vault",
+      category: "Keamanan Dokumen • Web Application",
+      desc: "Aplikasi penyimpanan dan berbagi dokumen dengan enkripsi AES-256-GCM, verifikasi integritas SHA-256, PIN, serta tautan berbagi dengan batas akses dan masa berlaku.",
+      image: "/securedoc-vault.webp",
+      href: "https://securedoc-malik.vercel.app",
+    },
+    {
+      title: "HookFlow",
+      category: "Otomasi Web • Web Application",
+      desc: "Dashboard untuk mengelola endpoint webhook, mengirim event uji, memvalidasi tanda tangan HMAC, serta memantau status pengiriman dan latensi.",
+      image: "/hookflow.webp",
+      href: "https://hookflow-malik.vercel.app",
+    },
+    {
+      title: "FitCV",
+      category: "Aplikasi Web • Next.js",
+      desc: "Aplikasi analisis kecocokan CV dengan lowongan kerja untuk menemukan kompetensi yang sesuai serta bagian yang perlu diperkuat.",
+      image: "/fitcv.webp",
+      href: "https://fitcv-malik.vercel.app",
     },
   ],
   en: [
     {
       title: "TOS Align Clinic",
       category: "Web Development • Next.js",
-      desc: "Developed a website for a clear aligner clinic to promote its services and support a network of more than 135 partners across 40 cities in Indonesia.",
+      desc: "Developed a website for a clear aligner clinic to promote its services and support a network of 135+ partner clinics across 40+ cities in Indonesia.",
       image: "/clinic.webp",
       href: "https://tosalign.com",
     },
@@ -35,18 +70,41 @@ const PROJECTS_DATA = {
       title: "Housing Data Management",
       category: "Web Application • PHP",
       desc: "Digitized company business processes through a web-based system with data import and administrative reporting features.",
-      image: "/mustika.png",
+      image: "/mustika.webp",
     },
     {
       title: "AES-RSA Hybrid Encryption",
       category: "Data Security • OpenSSL",
       desc: "Protected sensitive data at rest in a database using AES-256-CBC and RSA-2048 OAEP as part of a thesis project.",
-      image: "/AES-RSA.png",
+      image: "/AES-RSA.webp",
+    },
+    {
+      title: "SecureDoc Vault",
+      category: "Document Security • Web Application",
+      desc: "A document storage and sharing application with AES-256-GCM encryption, SHA-256 integrity verification, PIN protection, and share links with access limits and expiration.",
+      image: "/securedoc-vault.webp",
+      href: "https://github.com/macuee03/securedoc-vault",
+    },
+    {
+      title: "HookFlow",
+      category: "Web Automation • Web Application",
+      desc: "A dashboard for managing webhook endpoints, sending test events, validating HMAC signatures, and monitoring delivery status and latency.",
+      image: "/hookflow.webp",
+      href: "https://github.com/macuee03/hookflow",
+    },
+    {
+      title: "FitCV",
+      category: "Web Application • Next.js",
+      desc: "A CV-to-job matching analyzer that identifies relevant skills and highlights areas that need improvement.",
+      image: "/fitcv.webp",
+      href: "https://fitcv-malik.vercel.app",
     },
   ],
 };
 
-export default function ProjectsSection({ language }) {
+export default function ProjectsSection({ language }: { language: Language }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
     <section id="projects" className="scroll-mt-24 pt-6 sm:scroll-mt-28">
       <div>
@@ -61,29 +119,30 @@ export default function ProjectsSection({ language }) {
         <div className="mb-6 mt-3 flex items-center justify-between gap-4 md:mb-8">
           <p className="text-xs text-slate-400 md:hidden">
             {language === "id"
-              ? "Geser kartu untuk melihat lainnya"
-              : "Swipe to explore"}
+              ? "Geser untuk melihat proyek lainnya"
+              : "Swipe to see more projects"}
           </p>
+          <HorizontalScrollControls scrollRef={scrollRef} language={language} />
         </div>
       </div>
 
       <div
+        ref={scrollRef}
         className="swipe-scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-3 sm:gap-5 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3 lg:gap-6"
       >
         {PROJECTS_DATA[language].map((proj, idx) => (
           <div
             key={idx}
-            delay={idx * 0.08}
-            hoverLift
             className="w-[72vw] max-w-88 shrink-0 snap-start md:w-auto md:max-w-none md:shrink"
           >
-            <div className="h-full bg-linear-to-br from-[#343638]/85 to-[#202225]/90 border border-purple-500/15 rounded-2xl overflow-hidden hover:border-purple-500/40 transition-all flex flex-col justify-between group">
+            <SpotlightCard className="flex flex-col justify-between">
               <div>
                 <div className="h-40 sm:h-48 lg:h-56 overflow-hidden relative">
                   <Image
                     src={proj.image}
                     alt={proj.title}
                     fill
+                    loading="eager"
                     sizes="(max-width: 480px) 100vw, (max-width: 1023px) 50vw, 33vw"
                     className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                   />
@@ -102,8 +161,8 @@ export default function ProjectsSection({ language }) {
                 </div>
               </div>
 
-              {proj.href && (
-                <div className="px-4 pb-4 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6">
+              <div className="min-h-17 px-4 pb-4 pt-1 sm:px-5 sm:pb-5 lg:px-6 lg:pb-6">
+                {proj.href && (
                   <a
                     href={proj.href}
                     target="_blank"
@@ -113,13 +172,13 @@ export default function ProjectsSection({ language }) {
                         ? `Kunjungi situs ${proj.title} (buka di tab baru)`
                         : `Visit ${proj.title} website (opens in a new tab)`
                     }
-                    className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#2b3036] border border-purple-500/30 text-purple-400 transition-all hover:bg-purple-600 hover:text-white focus-visible:outline-2 focus-visible:outline-purple-400"
+                    className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-purple-500/30 bg-[#2b3036] text-purple-400 transition-all hover:bg-purple-600 hover:text-white focus-visible:outline-2 focus-visible:outline-purple-400"
                   >
                     <ArrowRight className="w-4 h-4" />
                   </a>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </SpotlightCard>
           </div>
         ))}
       </div>

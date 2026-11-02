@@ -1,6 +1,16 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
+
+type RevealProps = {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  direction?: "up" | "left" | "right" | "scale";
+  animateOnLoad?: boolean;
+  hoverLift?: boolean;
+};
 
 export default function Reveal({
   children,
@@ -9,7 +19,7 @@ export default function Reveal({
   direction = "up",
   animateOnLoad = false,
   hoverLift = false,
-}) {
+}: RevealProps) {
   const reduceMotion = useReducedMotion();
   const offset =
     direction === "left"
