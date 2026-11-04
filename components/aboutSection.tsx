@@ -38,8 +38,7 @@ export default function AboutSection({ language }: { language: Language }) {
           <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-8">
             {language === "id"
               ? "Saya adalah fresh graduate Teknik Informatika Universitas Esa Unggul dengan pengalaman membangun backend dan aplikasi web. Saya terbiasa mengembangkan fitur CRUD, mengelola MySQL dan PostgreSQL, serta mengintegrasikan sistem. Saya menerapkan enkripsi data menggunakan PHP dan Next.js, serta membangun FitCV dengan Python dan FastAPI."
-              : "I am an Informatics Engineering fresh graduate from Universitas Esa Unggul with experience building backend systems and web applications. I work with CRUD features, MySQL and PostgreSQL, and system integration. I implement data encryption with PHP and Next.js, and built FitCV with Python and FastAPI."
-            }
+              : "I am an Informatics Engineering fresh graduate from Universitas Esa Unggul with experience building backend systems and web applications. I work with CRUD features, MySQL and PostgreSQL, and system integration. I implement data encryption with PHP and Next.js, and built FitCV with Python and FastAPI."}
           </p>
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-8">
@@ -64,7 +63,7 @@ export default function AboutSection({ language }: { language: Language }) {
           <a
             href="/cv-malik.pdf"
             download="cv-malik.pdf"
-            className="px-6 py-2.5 rounded-full bg-white text-[#17191b] font-semibold text-xs shadow-[0_0_22px_rgba(255,255,255,0.2)] hover:bg-purple-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.35)] transition-all inline-flex items-center gap-2 cursor-pointer"
+            className="px-6 py-2.5 rounded-full bg-linear-to-r from-purple-600 to-[#7f8994] text-slate-200 font-semibold text-xs shadow-[0_0_25px_rgba(215,219,224,0.2)] hover:shadow-[0_0_35px_rgba(215,219,224,0.35)] transition-all inline-flex items-center gap-2 cursor-pointer"
           >
             <Download className="size-4" aria-hidden="true" />
             {language === "id" ? "Unduh CV" : "Download CV"}

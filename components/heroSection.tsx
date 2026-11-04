@@ -70,7 +70,7 @@ export default function HeroSection({ language }: { language: Language }) {
         <p
           aria-label={
             language === "id"
-              ? "Pengembang Frontend dan Pengembang Backend"
+              ? "Frontend Developer dan Backend Developer"
               : "Frontend Developer and Backend Developer"
           }
           className="mt-3 min-h-8 text-lg md:text-xl font-semibold text-purple-300"
@@ -86,8 +86,8 @@ export default function HeroSection({ language }: { language: Language }) {
             >
               {language === "id"
                 ? showFrontend
-                  ? "Pengembang Frontend"
-                  : "Pengembang Backend"
+                  ? "Frontend Developer"
+                  : "Backend Developer"
                 : showFrontend
                   ? "Frontend Developer"
                   : "Backend Developer"}
